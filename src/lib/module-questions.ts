@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { GateQuestion, Lesson } from "@/lib/medpath-data";
+import { DEFAULT_LESSON_QUESTIONS } from "@/data/lesson-questions";
 
 export interface ModuleQuestion extends GateQuestion {
   moduleId: "mod-8" | "mod-9" | "mod-10" | "mod-11";
@@ -19,6 +20,8 @@ export const DEFAULT_MODULE_QUESTIONS: Record<string, ModuleQuestion[]> = {
   "mod-10": [],
   "mod-11": [],
 };
+
+export { DEFAULT_LESSON_QUESTIONS };
 
 // Không tự sinh câu hỏi mẫu khi chưa nhập dữ liệu
 export function generateQuestionsForLesson(_lesson: Lesson): GateQuestion[] {
@@ -149,10 +152,10 @@ export function useQuestionBankStore() {
     (lesson: Lesson | string): GateQuestion[] => {
       const id = typeof lesson === "string" ? lesson : lesson.id;
       const customList = lessonQuestionsMap[id];
-      if (Array.isArray(customList)) {
+      if (Array.isArray(customList) && customList.length > 0) {
         return customList;
       }
-      return [];
+      return DEFAULT_LESSON_QUESTIONS[id] || [];
     },
     [lessonQuestionsMap]
   );

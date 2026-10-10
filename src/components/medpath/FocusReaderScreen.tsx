@@ -9,6 +9,7 @@ import {
 } from "@/lib/medpath-data";
 import { useMedPathCurriculum } from "@/lib/use-curriculum";
 import { useQuestionBankStore } from "@/lib/module-questions";
+import { DEFAULT_LESSON_CONTENTS } from "@/data/lesson-contents";
 import { PostLessonQuizModal } from "@/components/medpath/PostLessonQuizModal";
 import {
   ArrowLeft,
@@ -73,6 +74,20 @@ export function FocusReaderScreen({
   const [notes, setNotes] = useState<string[]>([]);
   const [newNote, setNewNote] = useState<string>("");
 
+  // Lightbox xem ảnh giải phẫu phóng to sắc nét
+  const [lightboxImage, setLightboxImage] = useState<{
+    src: string;
+    alt: string;
+  } | null>(null);
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxImage(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+
   // Trình soạn thảo nội dung bài học dành cho Quản trị viên
   const [isEditingContent, setIsEditingContent] = useState<boolean>(false);
   const [draftContent, setDraftContent] = useState<string>("");
@@ -103,7 +118,10 @@ export function FocusReaderScreen({
   }
 
   const activeLessonId = currentLesson?.id || "les-8-1-1";
-  const savedCustomContent = customContents[activeLessonId] || "";
+  const savedCustomContent =
+    customContents[activeLessonId] ||
+    DEFAULT_LESSON_CONTENTS[activeLessonId] ||
+    "";
   const hasEnteredContent = Boolean(savedCustomContent.trim().length > 0);
 
   const currentLessonQuestions = currentLesson
@@ -492,9 +510,20 @@ export function FocusReaderScreen({
 
           {/* HIỂN THỊ NỘI DUNG: Chỉ hiện nội dung đã nhập, nếu chưa nhập sẽ báo trống */}
           {hasEnteredContent ? (
-            <section className="space-y-4">
+            <section
+              className="space-y-4"
+              onClick={(e) => {
+                const target = (e.target as HTMLElement).closest("img");
+                if (target) {
+                  setLightboxImage({
+                    src: target.src,
+                    alt: target.alt || "Hình ảnh giải phẫu y khoa",
+                  });
+                }
+              }}
+            >
               <div
-                className="prose max-w-none text-[#30312F] space-y-4 leading-relaxed [&_h1]:font-serif [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[#30312F] [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#782F3B] [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:font-serif [&_h3]:text-lg [&_h3]:font-bold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3"
+                className="prose max-w-none text-[#30312F] space-y-4 leading-relaxed [&_h1]:font-serif [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:text-[#30312F] [&_h2]:font-serif [&_h2]:text-xl [&_h2]:font-bold [&_h2]:text-[#782F3B] [&_h2]:mt-6 [&_h2]:mb-2 [&_h3]:font-serif [&_h3]:text-lg [&_h3]:font-bold [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_p]:mb-3 [&_img]:cursor-zoom-in"
                 dangerouslySetInnerHTML={{
                   __html: savedCustomContent.includes("<")
                     ? savedCustomContent
@@ -636,6 +665,37 @@ export function FocusReaderScreen({
           onNavigate("gate");
         }}
       />
+
+      {/* LIGHTBOX PHÓNG TO HÌNH ẢNH GIẢI PHẪU Y KHOA */}
+      {lightboxImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center p-4 animate-in fade-in duration-150"
+          onClick={() => setLightboxImage(null)}
+        >
+          <div className="relative max-w-5xl max-h-[92vh] flex flex-col items-center">
+            <button
+              onClick={() => setLightboxImage(null)}
+              className="absolute -top-12 right-0 p-2 text-white/80 hover:text-white bg-white/10 hover:bg-white/25 rounded-full transition cursor-pointer"
+              title="Đóng (Phím Esc)"
+            >
+              <X className="w-6 h-6" />
+            </button>
+            <img
+              src={lightboxImage.src}
+              alt={lightboxImage.alt}
+              className="max-h-[82vh] max-w-full object-contain rounded-xl shadow-2xl bg-white p-2 border border-white/20"
+              onClick={(e) => e.stopPropagation()}
+            />
+            {lightboxImage.alt && (
+              <div className="mt-3 text-center text-white/90 text-sm font-sans font-medium max-w-2xl bg-black/40 px-4 py-1.5 rounded-full">
+                {lightboxImage.alt}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

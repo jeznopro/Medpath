@@ -86,7 +86,7 @@ export const MEDPATH_DISCIPLINES: Discipline[] = [
     masteryPercentage: 0,
     color: "#782F3B",
     description: "Chương trình đào tạo Module 8 - Tim mạch gồm 16 bài giảng (Lý thuyết & Thực hành).",
-    currentTopic: "Chưa bắt đầu",
+    currentTopic: "LT1. Hình thái của tim",
   },
   {
     id: "mod-9",
@@ -151,16 +151,32 @@ export const MODULE_8_CHAPTERS: Chapter[] = [
         id: "les-8-1-1",
         chapterId: "mod-8-chap-1",
         code: "K56.LT1",
-        title: "LT1. H\u00ecnh th\u00e1i c\u1ee7a tim",
-        latinTitle: "Cor & Morfologia cordis externa et interna [B\u1ed9 m\u00f4n Gi\u1ea3i ph\u1eabu]",
-        estimatedMinutes: 30,
-        questionCount: 20,
-        status: "completed",
-        score: 92,
+        title: "LT1. Hình thái của tim",
+        latinTitle: "Cor & Morphologia cordis [Bài 1 - Chương 1: Hệ Tim mạch]",
+        estimatedMinutes: 35,
+        questionCount: 15,
+        status: "in_progress",
+        score: undefined,
         threshold: 80,
-        objectives: ["Mô tả hình thể ngoài của tim: đỉnh, đáy, 3 mặt", "Hình thể trong 4 buồng tim và các van tim", "Hệ thống động mạch vành và tĩnh mạch tim"],
-        clinicalHighlights: ["Nhồi máu cơ tim theo nhánh động mạch vành", "Tiếng tim và tiếng thổi cơ năng/thực thể"],
-        keyTerms: ["Apex cordis", "Ventriculus sinister", "Arteria coronaria", "Valva atrioventricularis"],
+        objectives: [
+          "Trình bày và giải thích được vị trí, hình thể ngoài, liên quan, hình thể trong; mạch máu và thần kinh chi phối tim",
+          "Trình bày được cấu tạo 3 lớp thành tim và hệ thần kinh tự động nội tại",
+          "Vận dụng kiến thức bài học để giải thích một số bệnh lý về tim (vết thương tim, tràn dịch màng ngoài tim, nhồi máu cơ tim, 4 ổ nghe van tim)"
+        ],
+        clinicalHighlights: [
+          "Vết thương thấu tim mặt trước (tâm thất phải chiếm 3/4 diện tích)",
+          "4 vị trí ổ nghe tiếng van tim trên thành ngực (ĐMC, ĐMP, 3 lá, 2 lá)",
+          "Đặc điểm nhận máu thì tâm trương của động mạch vành & nhồi máu cơ tim",
+          "Khoang màng ngoài tim và hội chứng ép tim cấp (Tamponade)"
+        ],
+        keyTerms: [
+          "Facies sternocostalis",
+          "Facies diaphragmatica",
+          "Sulcus coronarius",
+          "Septum interventriculare",
+          "Arteria coronaria",
+          "Nodus sinuatrialis"
+        ],
       },
       {
         id: "les-8-1-2",
