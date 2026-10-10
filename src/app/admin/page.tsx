@@ -230,28 +230,51 @@ export default function AdminDashboardPage() {
       MEDPATH_DISCIPLINES[0];
     const targetLesson = qModuleLessons.find((l) => l.id === qLessonId);
 
-    const ts = Date.now();
-    const options = [
-      { id: `${ts}-a`, label: "A", text: newQOptA.trim() },
-      { id: `${ts}-b`, label: "B", text: newQOptB.trim() },
-      { id: `${ts}-c`, label: "C", text: newQOptC.trim() || "Phương án C" },
-      { id: `${ts}-d`, label: "D", text: newQOptD.trim() || "Phương án D" },
+    const expText =
+      newQExplanation.trim() ||
+      "Giải thích đối chiếu theo tài liệu bài giảng.";
+
+    const options: {
+      id: "A" | "B" | "C" | "D";
+      text: string;
+      isCorrect: boolean;
+      explanation: string;
+    }[] = [
+      {
+        id: "A",
+        text: newQOptA.trim(),
+        isCorrect: newQCorrectOpt === "A",
+        explanation: expText,
+      },
+      {
+        id: "B",
+        text: newQOptB.trim(),
+        isCorrect: newQCorrectOpt === "B",
+        explanation: expText,
+      },
+      {
+        id: "C",
+        text: newQOptC.trim() || "Phương án C",
+        isCorrect: newQCorrectOpt === "C",
+        explanation: expText,
+      },
+      {
+        id: "D",
+        text: newQOptD.trim() || "Phương án D",
+        isCorrect: newQCorrectOpt === "D",
+        explanation: expText,
+      },
     ];
-    const correctOption =
-      options.find((o) => o.label === newQCorrectOpt) || options[0];
 
     const payload = {
-      type: "single_choice" as const,
-      difficulty: "Lý thuyết chuẩn",
-      content: newQContent.trim(),
+      type: "single" as const,
+      difficulty: "Cơ bản" as const,
+      question: newQContent.trim(),
       options,
-      correctOptionId: correctOption.id,
-      explanation:
-        newQExplanation.trim() ||
-        "Giải thích đối chiếu theo tài liệu bài giảng.",
-      sourceSection: targetLesson
+      reference: targetLesson
         ? `${qMod.name} • [${targetLesson.code}] ${targetLesson.title}`
         : `${qMod.name} • Đề tổng hợp Module`,
+      topicTag: targetLesson ? targetLesson.code : qMod.code,
       lessonCode: targetLesson?.code,
     };
 
@@ -1104,7 +1127,7 @@ export default function AdminDashboardPage() {
                       >
                         <div className="flex items-start justify-between gap-2">
                           <div className="font-bold text-[#30312F]">
-                            Câu {idx + 1}: {q.content}
+                            Câu {idx + 1}: {q.question}
                           </div>
                           <button
                             type="button"
@@ -1133,12 +1156,12 @@ export default function AdminDashboardPage() {
                             <div
                               key={opt.id}
                               className={`px-2 py-1 rounded border ${
-                                opt.id === q.correctOptionId
+                                opt.isCorrect
                                   ? "bg-[#EDF6F2] border-[#34745B] text-[#1E4435] font-bold"
                                   : "bg-[#FAF7F0] border-[#E8E1D3] text-[#565551]"
                               }`}
                             >
-                              {opt.label}. {opt.text}
+                              {opt.id}. {opt.text}
                             </div>
                           ))}
                         </div>
