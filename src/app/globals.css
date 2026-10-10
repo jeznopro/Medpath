@@ -1,27 +1,184 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #F3EFE6;
+    --foreground: #30312F;
+    --burgundy: #782F3B;
+    --paper-card: #FAF7F0;
+    --paper-border: #DDD7CC;
+    --pine: #34745B;
+    --amber: #B67A36;
+  }
+
+  body {
+    background-color: #F3EFE6;
+    color: #30312F;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, .font-editorial {
+    font-family: 'Newsreader', Georgia, Cambria, 'Times New Roman', Times, serif;
+    letter-spacing: -0.015em;
+  }
+
+  /* Academic hairline borders */
+  .border-hairline {
+    border-color: #DDD7CC;
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+
+/* Custom Markdown Content Styling */
+.markdown-body h1 {
+  @apply text-2xl sm:text-3xl font-bold text-teal-900 dark:text-teal-200 mt-6 mb-4 pb-2 border-b border-teal-100 dark:border-slate-800 tracking-tight;
+}
+.markdown-body h2 {
+  @apply text-xl sm:text-2xl font-bold text-teal-800 dark:text-teal-300 mt-6 mb-3 scroll-mt-24;
+}
+.markdown-body h3 {
+  @apply text-lg font-semibold text-slate-800 dark:text-slate-200 mt-4 mb-2;
+}
+.markdown-body p {
+  @apply leading-relaxed text-slate-700 dark:text-slate-300 mb-4 text-base sm:text-[17px];
+}
+.markdown-body ul {
+  @apply list-disc list-inside space-y-2 mb-4 text-slate-700 dark:text-slate-300 pl-2;
+}
+.markdown-body ol {
+  @apply list-decimal list-inside space-y-2 mb-4 text-slate-700 dark:text-slate-300 pl-2;
+}
+.markdown-body strong {
+  @apply font-semibold text-teal-950 dark:text-teal-100;
+}
+.markdown-body blockquote {
+  @apply border-l-4 border-teal-500 bg-teal-50/50 dark:bg-teal-950/30 px-4 py-3 rounded-r-lg my-4 italic text-slate-700 dark:text-slate-300;
+}
+.markdown-body code {
+  @apply bg-slate-100 dark:bg-slate-800 px-1.5 py-0.5 rounded text-sm font-mono text-teal-700 dark:text-teal-300;
+}
+.markdown-body table {
+  @apply w-full border-collapse my-4 text-sm;
+}
+.markdown-body th {
+  @apply bg-teal-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-2.5 text-left font-semibold text-teal-900 dark:text-teal-200;
+}
+.markdown-body td {
+  @apply border border-slate-200 dark:border-slate-700 p-2.5;
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+/* Custom HTML Book Styling */
+.html-book-body {
+  @apply leading-relaxed text-slate-800 dark:text-slate-200;
 }
+.html-book-body h1 {
+  @apply text-2xl sm:text-3xl font-extrabold text-teal-950 dark:text-teal-200 mt-6 mb-4 pb-2 border-b border-teal-100 dark:border-slate-800 tracking-tight;
+}
+.html-book-body h2 {
+  @apply text-xl sm:text-2xl font-bold text-teal-800 dark:text-teal-300 mt-6 mb-3 scroll-mt-24;
+}
+.html-book-body h3 {
+  @apply text-lg sm:text-xl font-bold text-slate-800 dark:text-slate-200 mt-4 mb-2;
+}
+.html-book-body p {
+  @apply mb-4 leading-relaxed text-base sm:text-[17px];
+}
+.html-book-body img {
+  @apply rounded-xl max-w-full my-4 shadow-sm mx-auto border border-slate-200 dark:border-slate-700;
+}
+.html-book-body figure {
+  @apply my-6 text-center;
+}
+.html-book-body figcaption {
+  @apply text-xs text-slate-500 mt-2 italic;
+}
+.html-book-body table {
+  @apply w-full border-collapse my-6 text-sm overflow-hidden rounded-xl border border-slate-200 dark:border-slate-700;
+}
+.html-book-body th {
+  @apply bg-teal-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 p-3 text-left font-bold text-teal-950 dark:text-teal-200;
+}
+.html-book-body td {
+  @apply border border-slate-200 dark:border-slate-700 p-3;
+}
+.html-book-body ul {
+  @apply list-disc list-inside space-y-2 mb-4 pl-2;
+}
+.html-book-body ol {
+  @apply list-decimal list-inside space-y-2 mb-4 pl-2;
+}
+.html-book-body blockquote {
+  @apply border-l-4 border-teal-500 bg-teal-50/60 dark:bg-teal-950/40 p-4 rounded-r-xl my-4 italic text-slate-700 dark:text-slate-300;
+}
+.html-book-body hr {
+  @apply my-8 border-teal-100 dark:border-slate-800;
+}
+
+/* Selection and Scrollbar */
+::selection {
+  background-color: #782F3B;
+  color: #FFFFFF;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(120, 47, 59, 0.2);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(120, 47, 59, 0.4);
+}
+
+
+/* Text Highlighting Classes */
+.hl-yellow {
+  background-color: #fef08a !important;
+  color: #1c1917 !important;
+  padding: 1px 3px;
+  border-radius: 4px;
+}
+.hl-green {
+  background-color: #bbf7d0 !important;
+  color: #064e3b !important;
+  padding: 1px 3px;
+  border-radius: 4px;
+}
+.hl-pink {
+  background-color: #fbcfe8 !important;
+  color: #831843 !important;
+  padding: 1px 3px;
+  border-radius: 4px;
+}
+.hl-orange {
+  background-color: #fed7aa !important;
+  color: #7c2d12 !important;
+  padding: 1px 3px;
+  border-radius: 4px;
+}
+
+/* 3D Flashcard Flip */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
